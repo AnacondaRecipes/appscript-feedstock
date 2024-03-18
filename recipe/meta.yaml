@@ -38,6 +38,10 @@ test:
     - mactypes
     - osax
     - aem.ae
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://appscript.sourceforge.io/
