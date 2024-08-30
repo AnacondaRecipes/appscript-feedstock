@@ -15,7 +15,7 @@ source:
 build:
   number: 0
   skip: true  # [not osx]
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv --no-build-isolation
 
 requirements:
   build:
@@ -26,6 +26,7 @@ requirements:
     - python
     - pip
     - setuptools
+    - wheel
 
   run:
     - python
@@ -40,18 +41,20 @@ test:
     - aem.ae
 
 about:
-  home: http://appscript.sourceforge.net
+  home: https://appscript.sourceforge.io/
   license: Public Domain
+  license_family: Other
   summary: Control AppleScriptable applications from Python.
   description: |
     Appscript is a user-friendly Apple event bridge that allows users to
     control scriptable Mac OS X applications from Python, Ruby and Objective-C.
     Appscript makes these languages serious alternatives to Apple's own
     AppleScript language for automating your Mac.
-  dev_url: http://svn.code.sf.net/p/appscript/code/py-appscript/
-  doc_url: https://pypi.python.org/pypi/appscript
-  doc_source_url: http://appscript.sourceforge.net/py-appscript/index.html
+  dev_url: https://pypi.org/project/appscript/
+  doc_url: https://appscript.sourceforge.io/
 
 extra:
+  skip_lints:
+    - missing_license_file
   recipe-maintainers:
     - nehaljwani
