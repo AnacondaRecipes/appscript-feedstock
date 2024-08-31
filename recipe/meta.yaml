@@ -46,8 +46,9 @@ test:
 
 about:
   home: https://appscript.sourceforge.io/
-  license: Public Domain
+  license: LicenseRef-Public-Domain
   license_family: Other
+  license_file: README.rst
   summary: Control AppleScriptable applications from Python.
   description: |
     Appscript is a user-friendly Apple event bridge that allows users to
@@ -58,7 +59,5 @@ about:
   doc_url: https://appscript.sourceforge.io/
 
 extra:
-  skip_lints:
-    - missing_license_file
   recipe-maintainers:
     - nehaljwani
