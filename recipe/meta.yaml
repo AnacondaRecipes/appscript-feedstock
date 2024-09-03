@@ -1,35 +1,31 @@
 {% set name = "appscript" %}
-{% set version = "1.1.2" %}
-{% set sha256 = "15727bda6f4049be5436e1974461f96b088d14ad154950417a7cda04587e6097" %}
+{% set version = "1.2.5" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
-  patches:
-    - 0001-Mark-AEDeterminePermissionToAutomateTarget-extern-in.patch
+  sha256: 54b77b0fa5b40482b32413f3634b7a5125a21495d19c7867174fb293cbb50d0d
 
 build:
   number: 0
   skip: true  # [not osx]
-  script: '{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv '
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv --no-build-isolation
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - patch     # [not win]
-    - m2-patch  # [win]
   host:
     - python
     - pip
     - setuptools
+    - wheel
 
   run:
     - python
+    - lxml >=4.7.1
 
 test:
   imports:
@@ -38,19 +34,24 @@ test:
     - mactypes
     - osax
     - aem.ae
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
-  home: http://appscript.sourceforge.net
-  license: Public Domain
+  home: https://appscript.sourceforge.io/
+  license: LicenseRef-Public-Domain-with-PSF-exception
+  license_family: Other
+  license_file: README.rst
   summary: Control AppleScriptable applications from Python.
   description: |
     Appscript is a user-friendly Apple event bridge that allows users to
     control scriptable Mac OS X applications from Python, Ruby and Objective-C.
     Appscript makes these languages serious alternatives to Apple's own
     AppleScript language for automating your Mac.
-  dev_url: http://svn.code.sf.net/p/appscript/code/py-appscript/
-  doc_url: https://pypi.python.org/pypi/appscript
-  doc_source_url: http://appscript.sourceforge.net/py-appscript/index.html
+  dev_url: https://pypi.org/project/appscript/
+  doc_url: https://appscript.sourceforge.io/
 
 extra:
   recipe-maintainers:
