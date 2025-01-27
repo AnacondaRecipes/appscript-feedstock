@@ -40,7 +40,7 @@ test:
     - pip check
 
 about:
-  home: https://appscript.sourceforge.io/
+  home: https://github.com/hhas/appscript
   license: LicenseRef-Public-Domain-with-PSF-exception
   license_family: Other
   license_file: README.rst
@@ -51,7 +51,7 @@ about:
     Appscript makes these languages serious alternatives to Apple's own
     AppleScript language for automating your Mac.
   dev_url: https://pypi.org/project/appscript/
-  doc_url: https://appscript.sourceforge.io/
+  doc_url: https://github.com/hhas/appscript
 
 extra:
   recipe-maintainers:
