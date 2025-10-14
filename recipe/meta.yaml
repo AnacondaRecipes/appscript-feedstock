@@ -1,13 +1,13 @@
 {% set name = "appscript" %}
-{% set version = "1.3.0" %}
+{% set version = "1.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 80943118bc97f9f78a8aa55f85565752ed4d82c7893427d7d9ebfdf401c12b2c
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b2c6fc770bf822ea45529c7084bc0ee340e67ab260016b01d28e0449ec8723be
 
 build:
   number: 0
@@ -22,7 +22,6 @@ requirements:
     - pip
     - setuptools
     - wheel
-
   run:
     - python
     - lxml >=4.7.1
