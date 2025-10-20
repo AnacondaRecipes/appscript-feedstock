@@ -16,6 +16,7 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
   host:
     - python
@@ -26,7 +27,16 @@ requirements:
     - python
     - lxml >=4.7.1
 
+# E   aem.findapp.ApplicationNotFoundError: Local application 'com.adobe.photoshop' not found.
+{% set ignore_tests = " --ignore=test/test_sdef.py" %}
+# E    AssertionError: '/private/tmp/moved-py-mactypes-test.hdju3h8m' != '/private/tmp/py-mactypes-test.hdju3h8m'
+{% set deselect_tests = " --deselect=test/test_mactypes.py::TC_MacTypes::test_alias" %}
+# E    AssertionError: 'file://localhost/non/existent%20path' != 'file:///non/existent%20path'
+{% set deselect_tests = deselect_tests + " --deselect=test/test_mactypes.py::TC_MacTypes::test_fileURL" %}
+
 test:
+  source_files:
+    - test
   imports:
     - aem
     - appscript
@@ -35,8 +45,11 @@ test:
     - aem.ae
   requires:
     - pip
+    - pytest
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v test {{ ignore_tests }} {{ deselect_tests }}
 
 about:
   home: https://github.com/hhas/appscript
@@ -49,8 +62,8 @@ about:
     control scriptable Mac OS X applications from Python, Ruby and Objective-C.
     Appscript makes these languages serious alternatives to Apple's own
     AppleScript language for automating your Mac.
-  dev_url: https://pypi.org/project/appscript/
-  doc_url: https://github.com/hhas/appscript
+  dev_url: https://github.com/hhas/appscript
+  doc_url: https://github.com/hhas/appscript/blob/master/py-appscript/README.rst
 
 extra:
   recipe-maintainers:
