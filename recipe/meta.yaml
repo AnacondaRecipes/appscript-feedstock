@@ -33,6 +33,12 @@ requirements:
 {% set deselect_tests = " --deselect=test/test_mactypes.py::TC_MacTypes::test_alias" %}
 # E    AssertionError: 'file://localhost/non/existent%20path' != 'file:///non/existent%20path'
 {% set deselect_tests = deselect_tests + " --deselect=test/test_mactypes.py::TC_MacTypes::test_fileURL" %}
+# CI doesn't have those applications, so we need to ignore these tests.
+# E     aem.aemconnect.CantLaunchApplicationError: Can't launch application at '/System/Library/CoreServices/Finder.app': An unknown error has occurred. (-10810)
+# E     aem.aemconnect.CantLaunchApplicationError: Can't launch application at '/System/Applications/TextEdit.app': An unknown error has occurred. (-10810)
+{% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptcommands.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptcommands_sdef.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=test/test_osax.py" %}
 
 test:
   source_files:
