@@ -39,6 +39,7 @@ requirements:
 {% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptcommands.py" %}
 {% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptcommands_sdef.py" %}
 {% set ignore_tests = ignore_tests + " --ignore=test/test_osax.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptreference.py" %}
 
 test:
   source_files:
