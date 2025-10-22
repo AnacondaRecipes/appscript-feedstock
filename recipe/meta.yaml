@@ -1,13 +1,13 @@
 {% set name = "appscript" %}
-{% set version = "1.3.0" %}
+{% set version = "1.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 80943118bc97f9f78a8aa55f85565752ed4d82c7893427d7d9ebfdf401c12b2c
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b2c6fc770bf822ea45529c7084bc0ee340e67ab260016b01d28e0449ec8723be
 
 build:
   number: 0
@@ -16,18 +16,34 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
   host:
     - python
     - pip
     - setuptools
     - wheel
-
   run:
     - python
     - lxml >=4.7.1
 
+# E   aem.findapp.ApplicationNotFoundError: Local application 'com.adobe.photoshop' not found.
+{% set ignore_tests = " --ignore=test/test_sdef.py" %}
+# E    AssertionError: '/private/tmp/moved-py-mactypes-test.hdju3h8m' != '/private/tmp/py-mactypes-test.hdju3h8m'
+{% set deselect_tests = " --deselect=test/test_mactypes.py::TC_MacTypes::test_alias" %}
+# E    AssertionError: 'file://localhost/non/existent%20path' != 'file:///non/existent%20path'
+{% set deselect_tests = deselect_tests + " --deselect=test/test_mactypes.py::TC_MacTypes::test_fileURL" %}
+# CI cannot run following applications:
+# E     aem.aemconnect.CantLaunchApplicationError: Can't launch application at '/System/Library/CoreServices/Finder.app': An unknown error has occurred. (-10810)
+# E     aem.aemconnect.CantLaunchApplicationError: Can't launch application at '/System/Applications/TextEdit.app': An unknown error has occurred. (-10810)
+{% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptcommands.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptcommands_sdef.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=test/test_osax.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=test/test_appscriptreference.py" %}
+
 test:
+  source_files:
+    - test
   imports:
     - aem
     - appscript
@@ -36,8 +52,11 @@ test:
     - aem.ae
   requires:
     - pip
+    - pytest
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v test {{ ignore_tests }} {{ deselect_tests }}
 
 about:
   home: https://github.com/hhas/appscript
@@ -50,8 +69,8 @@ about:
     control scriptable Mac OS X applications from Python, Ruby and Objective-C.
     Appscript makes these languages serious alternatives to Apple's own
     AppleScript language for automating your Mac.
-  dev_url: https://pypi.org/project/appscript/
-  doc_url: https://github.com/hhas/appscript
+  dev_url: https://github.com/hhas/appscript
+  doc_url: https://github.com/hhas/appscript/blob/master/py-appscript/README.rst
 
 extra:
   recipe-maintainers:
