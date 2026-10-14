@@ -1,5 +1,5 @@
 {% set name = "appscript" %}
-{% set version = "1.4.0" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: b2c6fc770bf822ea45529c7084bc0ee340e67ab260016b01d28e0449ec8723be
+  sha256: cfe7a48215f131c5a55c5e675ca7b70e0c92e65e71725dc11a699720d93c57dc
 
 build:
   number: 0
